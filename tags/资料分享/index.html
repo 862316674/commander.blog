@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Home">
+    <meta name="keywords" content="标签: 资料分享, Home">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Home</title>
+    <title>标签: 资料分享 | Home</title>
     <link rel="icon" type="image/png" href="/commander.blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/commander.blog/libs/awesome/css/all.css">
@@ -310,56 +310,9 @@
 <link rel="stylesheet" href="/js/prism/prism.css">
 </header>
 
-    
-<style>
-    .carousel-control {
-        width: 45px;
-        height: 45px;
-        line-height: 55px;
-        border-radius: 45px;
-        background: transparent;
-        cursor: pointer;
-        z-index: 100;
-    }
-
-    #prev-cover {
-        position: absolute;
-        top: 48%;
-        left: 8px;
-    }
-
-    #next-cover {
-        position: absolute;
-        top: 48%;
-        right: 8px;;
-    }
-
-    #prev-cover i {
-        margin-right: 3px;
-    }
-
-    #next-cover i {
-        margin-left: 3px;
-    }
-
-    .carousel-control:hover {
-        background-color: rgba(0, 0, 0, .4);
-    }
-
-    .carousel-control i {
-        color: #fff;
-        font-size: 2.4rem;
-    }
-</style>
-
-
-
-<div class="carousel carousel-slider center index-cover" data-indicators="true" style="margin-top: -64px;">
-    
-
-    <div class="carousel-item red white-text bg-cover about-cover">
-        <div class="container">
-            <div class="row">
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
         <div class="brand">
             <div class="title center-align">
@@ -396,351 +349,54 @@
 </script>
 
 
-
-            <div class="cover-btns">
-                <a href="#articles" class="waves-effect waves-light btn">
-                    <i class="fa fa-angle-double-down"></i>开始阅读
-                </a>
-
-                
-                    <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light btn" target="_blank">
-                        <i class="fab fa-github-alt"></i>Github
-                    </a>
-                
-            </div>
-            <div class="cover-social-link">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/commander.blog/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-        </div>
     </div>
-
-    
 </div>
-
-<script>
-    $(function () {
-        let coverSlider = $('.carousel');
-
-        //用户触摸轮播自动 restartPlay 是否生效
-        let initUserPressedOrDraggedActive = false
-
-        //用户触摸轮播自动 restartPlay
-        function initUserPressedOrDragged(instance) {
-            setInterval(() => {
-                if (instance.pressed || instance.dragged) {
-                    // console.log('initUserPressedOrDragged: ',instance.pressed,instance.dragged)
-                    restartPlay()
-                }
-            }, 1000)
-        }
-
-        coverSlider.carousel({
-            duration: Number('120'),
-            fullWidth: true,
-            indicators: 'true' === 'true',
-            onCycleTo() {
-                if (!initUserPressedOrDraggedActive) {
-                    // console.log('initUserPressedOrDraggedActive')
-                    initUserPressedOrDragged(this)
-                    initUserPressedOrDraggedActive = true
-                }
-            },
-        })
-
-        let carouselIntervalId;
-        
-        // Loop to call the next cover article picture.
-        let autoCarousel = function () {
-            carouselIntervalId = setInterval(function () {
-                coverSlider.carousel('next');
-            }, 5000);
-        };
-        autoCarousel();
-        
-
-        function restartPlay() {
-            
-            clearInterval(carouselIntervalId);
-            autoCarousel();
-            
-        };
-
-        
-        // prev and next cover post.
-        $('#prev-cover').click(function () {
-            coverSlider.carousel('prev');
-            restartPlay();
-        });
-        $('#next-cover').click(function () {
-            coverSlider.carousel('next');
-            restartPlay();
-        });
-        
-    });
-</script>
-
-
 
 <main class="content">
 
     
-    <div id="indexCard" class="index-card">
-        <div class="container ">
-            <div class="card">
-                <div class="card-content">
-                    
-                        <div class="dream">
-    
-    <div class="title center-align">
-        <i class="far fa-lightbulb"></i>&nbsp;&nbsp;我
-    </div>
-    
-    <div class="row">
-        <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
-            You are more than what you have become now.
+
+<div id="tags" class="container chip-container">
+    <div class="card">
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fas fa-tags"></i>&nbsp;&nbsp;文章标签
+            </div>
+            <div class="tag-chips">
+                
+                
+                <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/" title="经验交流: 5">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="经验交流" style="background-color: #F9EBEA;">经验交流
+                        <span class="tag-length">5</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/commander.blog/tags/%E8%B5%84%E6%96%99%E5%88%86%E4%BA%AB/" title="资料分享: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            data-tagname="资料分享" style="background-color: #F5EEF8;">资料分享
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+            </div>
         </div>
     </div>
 </div>
 
-                    
-
-                    
-
-                    
-
-                    
-                    <div id="recommend-sections" class="recommend">
-                        
-
-
-
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
     
 
-    
-
-    <!-- 所有文章卡片 -->
     <article id="articles" class="container articles">
-        <div class="row article-row">
+        <div class="row tags-posts">
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/commander.blog/2022/02/24/Java%E6%95%B0%E7%BB%84%E4%B8%8Elist%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/commander.blog/medias/featureimages/0.jpg" class="responsive-img" alt="Java数组与list相互转换的一些坑">
-                            
-                            <span class="card-title">Java数组与list相互转换的一些坑</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Java数组与list相互转换的一些坑数组转list&emsp;&emsp;使用Arrays.asList()方法，将返回值转换成java.util.ArrayList后可实现ArrayList的全部功能。String[] testArr 
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                Commander
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                            <span class="chip bg-color">经验交流</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/commander.blog/2022/02/24/python%E6%B3%A8%E8%A7%A3-lru-cache%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/commander.blog/medias/featureimages/13.jpg" class="responsive-img" alt="python注解@lru_cache实现记忆化搜索">
-                            
-                            <span class="card-title">python注解@lru_cache实现记忆化搜索</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                python注解@lru_cache实现记忆化搜索注解作用&emsp;&emsp;注解不同于注释，注解是对某一属性或方法的修饰，可以认为是对其附加一种特性，对于本身代码有影响，而注释只是为了便于读者理解而添加的说明性文字，两者有本质的不同。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                Commander
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                            <span class="chip bg-color">经验交流</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/commander.blog/2022/02/24/%E7%88%AC%E5%8F%96%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/commander.blog/medias/featureimages/16.jpg" class="responsive-img" alt="爬取每日一题代码分析">
-                            
-                            <span class="card-title">爬取每日一题代码分析</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                贴一波爬LeetCode每日一题的代码，也没啥技术含量，就嗯套+连连看，以后看看有没有啥更好的方法，以下都是使用#单行注释（Sagemath选手狂喜）
-准备工作from selenium import webdriver
-import ti
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                Commander
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                            <span class="chip bg-color">经验交流</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/commander.blog/2022/02/24/%E5%85%B3%E4%BA%8E%E5%BF%97%E6%84%BF%E4%BB%A5%E5%8F%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E7%9A%84%E4%BB%8B%E7%BB%8D/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/commander.blog/medias/featureimages/21.jpg" class="responsive-img" alt="关于志愿以及计算机专业的介绍">
-                            
-                            <span class="card-title">关于志愿以及计算机专业的介绍</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                院校综合情况(图较多，如果图片出现404，请多刷新几次)985、211及部分其他学校本一批录取分数线的综合情况，分别为全国平均和四川省情况，分数线为提档线。（下面会有相关解释）
-
-图 全国平均录取线情况
- 
-
-
-图组 四川省2019、202
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                Commander
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                            <span class="chip bg-color">经验交流</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
+            <div class="article tag-post col s12 m6 l4" data-tags="资料分享" data-aos="fade-up">
                 <div class="card">
                     <a href="/commander.blog/2022/02/24/%E5%8A%9B%E6%89%A3%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E6%B1%87%E6%80%BB-2021-5-26%E8%B5%B7/">
-                        <div class="card-image">
+                        <div class="card-image tag-image">
                             
                             
                             <img src="/commander.blog/medias/featureimages/2.jpg" class="responsive-img" alt="力扣每日一题汇总(2021.5.26起)">
@@ -748,25 +404,7 @@ import ti
                             <span class="card-title">力扣每日一题汇总(2021.5.26起)</span>
                         </div>
                     </a>
-
                     <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                前言发现力扣害没有自带每日一题的页面，正好想尝试一下爬数据就记录了一波。暂时是每天爬到服务器上，然后不定期手动上传（技艺不精2333）。后面有空看看怎么直接写数据库wwwww
-
-2021年5月
-
-
-
-时间
-题号
-标题
-难度
-通过率
-题解数
-
-                            
-                        </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
@@ -779,23 +417,14 @@ import ti
                             </span>
                         </div>
                     </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E8%B5%84%E6%96%99%E5%88%86%E4%BA%AB/">
-                            <span class="chip bg-color">资料分享</span>
-                        </a>
-                        
-                    </div>
-                    
                 </div>
             </div>
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
+            
+            <div class="article tag-post col s12 m6 l4" data-tags="资料分享" data-aos="fade-up">
                 <div class="card">
                     <a href="/commander.blog/2022/02/24/%E5%81%9A%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99%E6%95%B4%E5%90%88%E5%92%8C%E5%88%86%E4%BA%AB/">
-                        <div class="card-image">
+                        <div class="card-image tag-image">
                             
                             
                             <img src="/commander.blog/medias/featureimages/3.jpg" class="responsive-img" alt="做一些资料整合和分享">
@@ -803,13 +432,7 @@ import ti
                             <span class="card-title">做一些资料整合和分享</span>
                         </div>
                     </a>
-
                     <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                数学微积分武忠祥考研数学系列 ：https://www.bilibili.com/video/BV1HK4y1E7ex    https://www.bilibili.com/video/BV1gA411j7Ta（武忠祥老师yyds，有非常
-                            
-                        </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
@@ -822,100 +445,11 @@ import ti
                             </span>
                         </div>
                     </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E8%B5%84%E6%96%99%E5%88%86%E4%BA%AB/">
-                            <span class="chip bg-color">资料分享</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/commander.blog/2022/02/24/%E4%BB%8E%E7%AE%80%E5%8D%95%E8%83%8C%E5%8C%85%E5%8A%A0%E5%AF%86%E4%B8%AD%E5%86%8D%E8%B0%88%E6%90%9C%E7%B4%A2%E4%B8%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/commander.blog/medias/featureimages/17.jpg" class="responsive-img" alt="从简单背包加密中再谈搜索与动态规划">
-                            
-                            <span class="card-title">从简单背包加密中再谈搜索与动态规划</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                题目说明问题：已知一背包加密的公钥为{615436700291,415460700271,15508700231,846430100773,677471501215, 139578302079,179168604148,7893066087
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                Commander
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                            <span class="chip bg-color">经验交流</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/commander.blog/2022/02/23/hello-world/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/commander.blog/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                            
-                            <span class="card-title">Hello World</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-23
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                Commander
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
                 </div>
             </div>
             
         </div>
     </article>
-
 </main>
 
 
