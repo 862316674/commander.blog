@@ -480,9 +480,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="python注解lru_cache实现记忆化搜索">python注解@lru_cache实现记忆化搜索</h1>
-<h2 id="注解作用">注解作用</h2>
-<p>  注解不同于注释，注解是对某一属性或方法的修饰，可以认为是对其附加一种特性，对于本身代码有影响，而注释只是为了便于读者理解而添加的说明性文字，两者有本质的不同。   我们仅对注解的作用给出简单例子，如下。 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Animal</span><span class="token punctuation">:</span>
+                <h1 id="python注解lru_cache实现记忆化搜索"><a class="markdownIt-Anchor" href="#python注解lru_cache实现记忆化搜索"></a> python注解@lru_cache实现记忆化搜索</h1>
+<h2 id="注解作用"><a class="markdownIt-Anchor" href="#注解作用"></a> 注解作用</h2>
+<p>  注解不同于注释，注解是对某一属性或方法的修饰，可以认为是对其附加一种特性，对于本身代码有影响，而注释只是为了便于读者理解而添加的说明性文字，两者有本质的不同。<br />
+  我们仅对注解的作用给出简单例子，如下。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Animal</span><span class="token punctuation">:</span>
 
     cnt <span class="token operator">=</span> <span class="token number">0</span>
 
@@ -493,7 +495,9 @@
     <span class="token keyword">def</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">int</span><span class="token punctuation">:</span>
         <span class="token keyword">return</span> Animal<span class="token punctuation">.</span>cnt
 
-<span class="token comment">#def count()会报错，无法执行，我们想让count作为类的静态方法，但python解释器会认为count()少传入了对象自身self而错误解释</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   这里我们需要使用注解的方式将count定义为类的静态方法。这里注意，在class下默认定义的属性为类的静态属性，而不是对象的属性，对象的属性需要利用self.来完成（一般是在构造函数中实现）。 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Animal</span><span class="token punctuation">:</span>
+<span class="token comment">#def count()会报错，无法执行，我们想让count作为类的静态方法，但python解释器会认为count()少传入了对象自身self而错误解释</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  这里我们需要使用注解的方式将count定义为类的静态方法。这里注意，在class下默认定义的属性为类的静态属性，而不是对象的属性，对象的属性需要利用self.来完成（一般是在构造函数中实现）。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Animal</span><span class="token punctuation">:</span>
 
     cnt <span class="token operator">=</span> <span class="token number">0</span>
 
@@ -509,9 +513,11 @@
 a <span class="token operator">=</span> Animal<span class="token punctuation">(</span><span class="token string">"cat"</span><span class="token punctuation">)</span>
 b <span class="token operator">=</span> Animal<span class="token punctuation">(</span><span class="token string">"dog"</span><span class="token punctuation">)</span>
 Animal<span class="token punctuation">.</span>count<span class="token punctuation">(</span><span class="token punctuation">)</span>
-Out<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   <span class="citation" data-cites="lru_cache注解可以对装饰的函数进行缓存">@lru_cache注解可以对装饰的函数进行缓存</span>，LRU(Least Recently Used)本意指最近最少使用算法，在这里仅表示一种缓存策略，本质上还是缓存结果，换句话说，使用该注解修饰的函数往往用在需要递归求解的问题中，可以对中间步骤进行缓存来提高效率。</p>
-<h2 id="效率分析">效率分析</h2>
-<p>  记忆化搜索对效率的提升是巨大的（递归过程中会存在巨量的重复的函数去计算一个已经得到值，因为会有极大的时间浪费），对于常年使用C++等语言写算法的同学早已习惯了各种记忆化搜索的方式。通常记忆化搜索需要由程序员本身来分配空间并定义状态，这样的操作较为繁琐，如果有一种方式能够自动的记录已搜索的结果就再好不过了，本文的核心python注解@lru_cache正是实现这样一种功能。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//在C++中传统的记忆化搜索</span>
+Out<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  @lru_cache注解可以对装饰的函数进行缓存，LRU(Least Recently Used)本意指最近最少使用算法，在这里仅表示一种缓存策略，本质上还是缓存结果，换句话说，使用该注解修饰的函数往往用在需要递归求解的问题中，可以对中间步骤进行缓存来提高效率。</p>
+<h2 id="效率分析"><a class="markdownIt-Anchor" href="#效率分析"></a> 效率分析</h2>
+<p>  记忆化搜索对效率的提升是巨大的（递归过程中会存在巨量的重复的函数去计算一个已经得到值，因为会有极大的时间浪费），对于常年使用C++等语言写算法的同学早已习惯了各种记忆化搜索的方式。通常记忆化搜索需要由程序员本身来分配空间并定义状态，这样的操作较为繁琐，如果有一种方式能够自动的记录已搜索的结果就再好不过了，本文的核心python注解@lru_cache正是实现这样一种功能。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//在C++中传统的记忆化搜索</span>
 <span class="token comment">//引用自OI WIKI 记忆化搜索部分</span>
 <span class="token comment">// C++ Version</span>
 <span class="token keyword">int</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -537,7 +543,10 @@ Out<span class="token punctuation">[</span><span class="token number">5</span><s
   <span class="token comment">// ...</span>
   <span class="token function">memset</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span> 无效数值<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token comment">// ...</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   我们尝试解决经典问题，求斐波那契数列，对比两者的效率。不难给出，在使用注解前的时间复杂度[latex]O (2^{n})[/latex]，而在使用注解进行记忆化搜索后，时间复杂度为[latex]O ( n )[/latex]，空间复杂度同样为[latex]O ( n )[/latex]。btw，在解决类似的线性递推问题，还可以通过矩阵快速幂的方式进一步压缩空间。 ### 使用注解前 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#jupyter</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  我们尝试解决经典问题，求斐波那契数列，对比两者的效率。不难给出，在使用注解前的时间复杂度[latex]\large O \normalsize \left(2^{n}\right)[/latex]，而在使用注解进行记忆化搜索后，时间复杂度为[latex]\large O \normalsize \left( n \right)[/latex]，空间复杂度同样为[latex]\large O \normalsize \left( n \right)[/latex]。btw，在解决类似的线性递推问题，还可以通过矩阵快速幂的方式进一步压缩空间。</p>
+<h3 id="使用注解前"><a class="markdownIt-Anchor" href="#使用注解前"></a> 使用注解前</h3>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#jupyter</span>
 <span class="token keyword">from</span> functools <span class="token keyword">import</span> <span class="token operator">*</span>
 <span class="token keyword">import</span> time
 <span class="token keyword">def</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">int</span><span class="token punctuation">:</span>
@@ -557,7 +566,9 @@ Out<span class="token punctuation">[</span><span class="token number">4</span><s
 dfs<span class="token punctuation">(</span><span class="token number">35</span><span class="token punctuation">)</span>
 Out<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">3.7380671000000003</span>
 dfs<span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span>
-Out<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">40.5477137</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> ### 使用注解后 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#jupyter</span>
+Out<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">40.5477137</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="使用注解后"><a class="markdownIt-Anchor" href="#使用注解后"></a> 使用注解后</h3>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#jupyter</span>
 <span class="token keyword">from</span> functools <span class="token keyword">import</span> <span class="token operator">*</span>
 <span class="token keyword">import</span> time
 <span class="token decorator annotation punctuation">@lru_cache</span><span class="token punctuation">(</span><span class="token boolean">None</span><span class="token punctuation">)</span>
@@ -578,10 +589,26 @@ Out<span class="token punctuation">[</span><span class="token number">4</span><s
 dfs<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
 Out<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">2.459999999970819e-05</span>
 dfs<span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span>
-Out<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">0.00028539999999921406</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="lru_cache的用法"><span class="citation" data-cites="lru_cache的用法">@lru_cache的用法</span></h2>
-<p>  lru_cache(maxsize=128, typed=False)有两个参数，第一个参数表明缓存参数个数，默认为128个，若注明None则表示无限制（但系统并不支持递归深度过大），如果设置typed=True，则不同参数类型的调用将分别缓存，例如f(3)和f(3.0)视为不同的缓存情况。   在递归函数前添加@lru_cache(None)即可，需要注明from functools import *,或在import functools的基础上使用@functools.lru_cache(None)，如下示例。</p>
-<p>  题源自力扣第276周赛T3 &gt; 给你一个下标从 0 开始的二维整数数组 questions ，其中 questions[i] = [pointsi, brainpoweri] 。 &gt; 这个数组表示一场考试里的一系列题目，你需要 按顺序 （也就是从问题 0 开始依次解决），针对每个问题选择 解决 或者 跳过 操作。解决问题 i 将让你 获得 pointsi 的分数，但是你将 无法 解决接下来的 brainpoweri 个问题（即只能跳过接下来的 brainpoweri 个问题）。如果你跳过问题 i ，你可以对下一个问题决定使用哪种操作。 &gt; 比方说，给你 questions = [[3, 2], [4, 3], [4, 4], [2, 5]] ： &gt; 如果问题 0 被解决了， 那么你可以获得 3 分，但你不能解决问题 1 和 2 。 &gt; 如果你跳过问题 0 ，且解决问题 1 ，你将获得 4 分但是不能解决问题 2 和 3 。 &gt; 请你返回这场考试里你能获得的 最高 分数。 &gt; 提示： &gt; 1 &lt;= questions.length &lt;= 105 &gt; questions[i].length == 2 &gt; 1 &lt;= pointsi, brainpoweri &lt;= 105 &gt; 来源：力扣（LeetCode） &gt; 链接：https://leetcode-cn.com/problems/solving-questions-with-brainpower &gt; 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+Out<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token number">0.00028539999999921406</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="lru_cache的用法"><a class="markdownIt-Anchor" href="#lru_cache的用法"></a> @lru_cache的用法</h2>
+<p>  lru_cache(maxsize=128, typed=False)有两个参数，第一个参数表明缓存参数个数，默认为128个，若注明None则表示无限制（但系统并不支持递归深度过大），如果设置typed=True，则不同参数类型的调用将分别缓存，例如f(3)和f(3.0)视为不同的缓存情况。<br />
+  在递归函数前添加@lru_cache(None)即可，需要注明from functools import *,或在import functools的基础上使用@functools.lru_cache(None)，如下示例。</p>
+<p>  题源自力扣第276周赛T3</p>
+<blockquote>
+<p>给你一个下标从 0 开始的二维整数数组 questions ，其中 questions[i] = [pointsi, brainpoweri] 。<br />
+这个数组表示一场考试里的一系列题目，你需要 按顺序 （也就是从问题 0 开始依次解决），针对每个问题选择 解决 或者 跳过 操作。解决问题 i 将让你 获得  pointsi 的分数，但是你将 无法 解决接下来的 brainpoweri 个问题（即只能跳过接下来的 brainpoweri 个问题）。如果你跳过问题 i ，你可以对下一个问题决定使用哪种操作。<br />
+比方说，给你 questions = [[3, 2], [4, 3], [4, 4], [2, 5]] ：<br />
+如果问题 0 被解决了， 那么你可以获得 3 分，但你不能解决问题 1 和 2 。<br />
+如果你跳过问题 0 ，且解决问题 1 ，你将获得 4 分但是不能解决问题 2 和 3 。<br />
+请你返回这场考试里你能获得的 最高 分数。<br />
+提示：<br />
+1 &lt;= questions.length &lt;= 105<br />
+questions[i].length == 2<br />
+1 &lt;= pointsi, brainpoweri &lt;= 105<br />
+来源：力扣（LeetCode）<br />
+链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/solving-questions-with-brainpower">https://leetcode-cn.com/problems/solving-questions-with-brainpower</a><br />
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">mostPoints</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> questions<span class="token punctuation">:</span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">int</span><span class="token punctuation">:</span>
 
@@ -593,7 +620,7 @@ Out<span class="token punctuation">[</span><span class="token number">6</span><s
             <span class="token keyword">return</span> <span class="token builtin">max</span><span class="token punctuation">(</span>points<span class="token operator">+</span>solve<span class="token punctuation">(</span>t<span class="token operator">+</span>brainpower<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> solve<span class="token punctuation">(</span>t<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
         <span class="token keyword">return</span> solve<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="附录关于lru_cache注解源码">附录：关于@lru_cache注解源码</h2>
+<h2 id="附录关于lru_cache注解源码"><a class="markdownIt-Anchor" href="#附录关于lru_cache注解源码"></a> 附录：关于@lru_cache注解源码</h2>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">lru_cache</span><span class="token punctuation">(</span>maxsize<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> typed<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token triple-quoted-string string">"""Least-recently-used cache decorator.
 

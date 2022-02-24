@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Home">
+    <meta name="keywords" content="C++模板函数make_pair的问题, Home">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Home</title>
+    <title>C++模板函数make_pair的问题 | Home</title>
     <link rel="icon" type="image/png" href="/commander.blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/commander.blog/libs/awesome/css/all.css">
@@ -314,12 +314,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/commander.blog/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/commander.blog/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">C++模板函数make_pair的问题</h1>
                 </div>
             </div>
         </div>
@@ -433,9 +433,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
+                                <span class="chip bg-color">经验交流</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -447,7 +451,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-23
+                    2022-02-24
                 </div>
                 
 
@@ -476,20 +480,115 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h1 id="c模板函数make_pair的问题"><a class="markdownIt-Anchor" href="#c模板函数make_pair的问题"></a> C++模板函数make_pair的问题</h1>
+<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
+<p>  前几天在群里看到有人写堆优化dijkstra最短路的时候出现了问题，问题定位在make_pair的代码上，日常写这个的时候一般没有指定模板的类型，能够正常编译和运行，但这里指定之后为什么会存在编译问题呢。原问题抽象一下如下。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">using</span> ll <span class="token operator">=</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token comment">//    ios::sync_with_stdio(false);</span>
+<span class="token comment">//    cin.tie(0), cout.tie(0);</span>
+
+    <span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span> pr <span class="token operator">=</span> <span class="token generic-function"><span class="token function">make_pair</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  报错为</p>
+<ul>
+<li>error: no matching function for call to ‘make_pair&lt;int, int&gt;(int&amp;, int)’</li>
+</ul>
+<hr />
+<h2 id="函数模板的特性"><a class="markdownIt-Anchor" href="#函数模板的特性"></a> 函数模板的特性</h2>
+<p>  函数重载、函数模板是C++的一个重要功能，利用泛型的方式由编译器编译时检测静态类型可以极大地便于编程。在使用模板函数时，可以不给出类型，交由编译器推导；也可以显式地指定类型，但必须与所带参数的类型一致，否则会报错。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">using</span> ll <span class="token operator">=</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
+
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+T <span class="token function">myMinus</span><span class="token punctuation">(</span>T a<span class="token punctuation">,</span> T b<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> a <span class="token operator">-</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token comment">//    ios::sync_with_stdio(false);</span>
+<span class="token comment">//    cin.tie(0), cout.tie(0);</span>
+
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">myMinus</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token generic-function"><span class="token function">myMinus</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token number">2.4</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  可以正常运行得到结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>输出结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+</tr>
+<tr>
+<td>1.9</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="考察make_pair原码"><a class="markdownIt-Anchor" href="#考察make_pair原码"></a> 考察make_pair原码</h2>
+<p>  在看了报错原因之后不禁疑惑，我给定的参数不应该是(int, int)为什么被推断成了(int&amp;, int)，这里就要引出make_pair函数的改良了，这个竟然是在C++11时代经过改良的一个函数。</p>
+<ul>
+<li>注意：#if __cplusplus &gt;= 201103L 根据这个宏表明按照C++11标准的编译，而__cplusplus为 199711L则按照旧标准编译</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  <span class="token comment">// 181.  make_pair() unintended behavior</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">__cplusplus <span class="token operator">>=</span> <span class="token number">201103L</span></span></span>
+  <span class="token comment">// NB: DR 706.</span>
+  <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">_T1</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">_T2</span><span class="token operator">></span>
+    <span class="token keyword">constexpr</span> pair<span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T1<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type<span class="token punctuation">,</span>
+                   <span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T2<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type<span class="token operator">></span>
+    <span class="token function">make_pair</span><span class="token punctuation">(</span>_T1<span class="token operator">&amp;&amp;</span> __x<span class="token punctuation">,</span> _T2<span class="token operator">&amp;&amp;</span> __y<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T1<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type __ds_type1<span class="token punctuation">;</span>
+      <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T2<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type __ds_type2<span class="token punctuation">;</span>
+      <span class="token keyword">typedef</span> pair<span class="token operator">&lt;</span>__ds_type1<span class="token punctuation">,</span> __ds_type2<span class="token operator">></span> 	      __pair_type<span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token function">__pair_type</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">forward</span><span class="token generic class-name"><span class="token operator">&lt;</span>_T1<span class="token operator">></span></span></span><span class="token punctuation">(</span>__x<span class="token punctuation">)</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">forward</span><span class="token generic class-name"><span class="token operator">&lt;</span>_T2<span class="token operator">></span></span></span><span class="token punctuation">(</span>__y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+  <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">_T1</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">_T2</span><span class="token operator">></span>
+    <span class="token keyword">inline</span> pair<span class="token operator">&lt;</span>_T1<span class="token punctuation">,</span> _T2<span class="token operator">></span>
+    <span class="token function">make_pair</span><span class="token punctuation">(</span>_T1 __x<span class="token punctuation">,</span> _T2 __y<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token generic-function"><span class="token function">pair</span><span class="token generic class-name"><span class="token operator">&lt;</span>_T1<span class="token punctuation">,</span> _T2<span class="token operator">></span></span></span><span class="token punctuation">(</span>__x<span class="token punctuation">,</span> __y<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  对比两个版本，最大的不同点在于给定参数模板时T被改为了T&amp;&amp;，这里就要谈一谈C++11中和右值引用相关的概念。</p>
+<hr />
+<h2 id="关于c11新的引用标准"><a class="markdownIt-Anchor" href="#关于c11新的引用标准"></a> 关于C++11新的引用标准</h2>
+<p>  在C++11中提出了右值引用的概念。我们一般习惯意义上的变量a,b,c还有对象object，指针p这些都是一个左值（严格意义上并不是定义依据，只是习惯理解）。右值分为两类，纯右值和将亡值。纯右值一般是字面量或表达式，而将亡值来源于临时对象即将销毁的情况。这两种情况都可以用右值引用的方式来获取。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token comment">//int &amp;&amp; a = num;  //右值引用不能初始化为左值</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+a <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  这里输出a的值为100。将亡值这里不再举例。右值引用的主要作用是为了减少程序开销的一种方式，一般都会利用其接管资源的性质。C<ins>更有关于move,forward的实用用途，不妨查阅相关资料深入理解。这里更重要的是在右值引用基础上，C</ins>做了一个万能引用(Universal Reference)。在指定template&lt;typename T&gt;模板的情况，可以使用T&amp;&amp;作为万能引用，具体推导见下面的例子。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>T<span class="token operator">&amp;&amp;</span> args<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入左值，推断为左值引用</span>
+<span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值，推断为右值引用</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;</span>la <span class="token operator">=</span> a<span class="token punctuation">;</span>
+<span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">//传入左值引用，经折叠，推断为左值引用</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>ra <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">f</span><span class="token punctuation">(</span>ra<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值引用，经折叠，推断为右值引用</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  对于本例，已经很好地说明了问题，在不采用C<ins>11新标准的情况下，使用make_pair是重新构造了新的变量来存储，所以能够正常运行。而在C</ins>11采用万能引用的基础上，若手动给出参数类型，反而会因为引用参数类型不匹配造成编译错误。</p>
 
                 
             </div>
@@ -516,7 +615,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://862316674.github.io/commander.blog/commander.blog/2022/02/23/hello-world/">https://862316674.github.io/commander.blog/commander.blog/2022/02/23/hello-world/</a>
+                    <a href="https://862316674.github.io/commander.blog/commander.blog/2022/02/24/C-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0make-pair%E7%9A%84%E9%97%AE%E9%A2%98/">https://862316674.github.io/commander.blog/commander.blog/2022/02/24/C-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0make-pair%E7%9A%84%E9%97%AE%E9%A2%98/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -553,7 +652,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
+                                    <span class="chip bg-color">经验交流</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -721,17 +824,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/commander.blog/2022/02/24/%E4%BB%8E%E7%AE%80%E5%8D%95%E8%83%8C%E5%8C%85%E5%8A%A0%E5%AF%86%E4%B8%AD%E5%86%8D%E8%B0%88%E6%90%9C%E7%B4%A2%E4%B8%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                <a href="/commander.blog/2022/02/24/C-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0make-pair%E7%9A%84%E9%97%AE%E9%A2%98/">
                     <div class="card-image">
                         
                         
-                        <img src="/commander.blog/medias/featureimages/17.jpg" class="responsive-img" alt="从简单背包加密中再谈搜索与动态规划">
+                        <img src="/commander.blog/medias/featureimages/1.jpg" class="responsive-img" alt="C++模板函数make_pair的问题">
                         
-                        <span class="card-title">从简单背包加密中再谈搜索与动态规划</span>
+                        <span class="card-title">C++模板函数make_pair的问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -741,9 +845,55 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Commander
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
+                        <span class="chip bg-color">经验交流</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/commander.blog/2022/02/24/Java%E6%95%B0%E7%BB%84%E4%B8%8Elist%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/commander.blog/medias/featureimages/0.jpg" class="responsive-img" alt="Java数组与list相互转换的一些坑">
+                        
+                        <span class="card-title">Java数组与list相互转换的一些坑</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -760,44 +910,6 @@
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/commander.blog/2022/02/23/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/commander.blog/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-23
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Commander
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
