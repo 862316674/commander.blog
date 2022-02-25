@@ -507,9 +507,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="c模板函数make_pair的问题">C++模板函数make_pair的问题</h1>
-<h2 id="问题引入">问题引入</h2>
-<p>  前几天在群里看到有人写堆优化dijkstra最短路的时候出现了问题，问题定位在make_pair的代码上，日常写这个的时候一般没有指定模板的类型，能够正常编译和运行，但这里指定之后为什么会存在编译问题呢。原问题抽象一下如下。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+                <h1 id="c模板函数make_pair的问题"><a class="markdownIt-Anchor" href="#c模板函数make_pair的问题"></a> C++模板函数make_pair的问题</h1>
+<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
+<p>  前几天在群里看到有人写堆优化dijkstra最短路的时候出现了问题，问题定位在make_pair的代码上，日常写这个的时候一般没有指定模板的类型，能够正常编译和运行，但这里指定之后为什么会存在编译问题呢。原问题抽象一下如下。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 <span class="token keyword">using</span> ll <span class="token operator">=</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
 
@@ -522,10 +523,15 @@
     pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span> pr <span class="token operator">=</span> <span class="token generic-function"><span class="token function">make_pair</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   报错为 - error: no matching function for call to 'make_pair&lt;int, int&gt;(int&amp;, int)'</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  报错为</p>
+<ul>
+<li>error: no matching function for call to ‘make_pair&lt;int, int&gt;(int&amp;, int)’</li>
+</ul>
 <hr />
-<h2 id="函数模板的特性">函数模板的特性</h2>
-<p>  函数重载、函数模板是C++的一个重要功能，利用泛型的方式由编译器编译时检测静态类型可以极大地便于编程。在使用模板函数时，可以不给出类型，交由编译器推导；也可以显式地指定类型，但必须与所带参数的类型一致，否则会报错。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+<h2 id="函数模板的特性"><a class="markdownIt-Anchor" href="#函数模板的特性"></a> 函数模板的特性</h2>
+<p>  函数重载、函数模板是C++的一个重要功能，利用泛型的方式由编译器编译时检测静态类型可以极大地便于编程。在使用模板函数时，可以不给出类型，交由编译器推导；也可以显式地指定类型，但必须与所带参数的类型一致，否则会报错。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 <span class="token keyword">using</span> ll <span class="token operator">=</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
 
@@ -545,25 +551,29 @@ T <span class="token function">myMinus</span><span class="token punctuation">(</
     cout <span class="token operator">&lt;&lt;</span> <span class="token generic-function"><span class="token function">myMinus</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token number">2.4</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   可以正常运行得到结果如下：</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  可以正常运行得到结果如下：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>输出结果</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>2</td>
 </tr>
-<tr class="even">
+<tr>
 <td>1.9</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="考察make_pair原码">考察make_pair原码</h2>
-<p>  在看了报错原因之后不禁疑惑，我给定的参数不应该是(int, int)为什么被推断成了(int&amp;, int)，这里就要引出make_pair函数的改良了，这个竟然是在C++11时代经过改良的一个函数。 - 注意：#if __cplusplus &gt;= 201103L 根据这个宏表明按照C++11标准的编译，而__cplusplus为 199711L则按照旧标准编译</p>
+<h2 id="考察make_pair原码"><a class="markdownIt-Anchor" href="#考察make_pair原码"></a> 考察make_pair原码</h2>
+<p>  在看了报错原因之后不禁疑惑，我给定的参数不应该是(int, int)为什么被推断成了(int&amp;, int)，这里就要引出make_pair函数的改良了，这个竟然是在C++11时代经过改良的一个函数。</p>
+<ul>
+<li>注意：#if __cplusplus &gt;= 201103L 根据这个宏表明按照C++11标准的编译，而__cplusplus为 199711L则按照旧标准编译</li>
+</ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  <span class="token comment">// 181.  make_pair() unintended behavior</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">__cplusplus <span class="token operator">>=</span> <span class="token number">201103L</span></span></span>
   <span class="token comment">// NB: DR 706.</span>
@@ -586,21 +596,26 @@ T <span class="token function">myMinus</span><span class="token punctuation">(</
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>  对比两个版本，最大的不同点在于给定参数模板时T被改为了T&amp;&amp;，这里就要谈一谈C++11中和右值引用相关的概念。</p>
 <hr />
-<h2 id="关于c11新的引用标准">关于C++11新的引用标准</h2>
-<p>  在C++11中提出了右值引用的概念。我们一般习惯意义上的变量a,b,c还有对象object，指针p这些都是一个左值（严格意义上并不是定义依据，只是习惯理解）。右值分为两类，纯右值和将亡值。纯右值一般是字面量或表达式，而将亡值来源于临时对象即将销毁的情况。这两种情况都可以用右值引用的方式来获取。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<h2 id="关于c11新的引用标准"><a class="markdownIt-Anchor" href="#关于c11新的引用标准"></a> 关于C++11新的引用标准</h2>
+<p>  在C++11中提出了右值引用的概念。我们一般习惯意义上的变量a,b,c还有对象object，指针p这些都是一个左值（严格意义上并不是定义依据，只是习惯理解）。右值分为两类，纯右值和将亡值。纯右值一般是字面量或表达式，而将亡值来源于临时对象即将销毁的情况。这两种情况都可以用右值引用的方式来获取。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 <span class="token comment">//int &amp;&amp; a = num;  //右值引用不能初始化为左值</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 a <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>   这里输出a的值为100。将亡值这里不再举例。右值引用的主要作用是为了减少程序开销的一种方式，一般都会利用其接管资源的性质。C++更有关于move,forward的实用用途，不妨查阅相关资料深入理解。这里更重要的是在右值引用基础上，C++做了一个万能引用(Universal Reference)。在指定template&lt;typename T&gt;模板的情况，可以使用T&amp;&amp;作为万能引用，具体推导见下面的例子。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  这里输出a的值为100。将亡值这里不再举例。右值引用的主要作用是为了减少程序开销的一种方式，一般都会利用其接管资源的性质。C<ins>更有关于move,forward的实用用途，不妨查阅相关资料深入理解。这里更重要的是在右值引用基础上，C</ins>做了一个万能引用(Universal Reference)。在指定template&lt;typename T&gt;模板的情况，可以使用T&amp;&amp;作为万能引用，具体推导见下面的例子。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
 <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>T<span class="token operator">&amp;&amp;</span> args<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre> <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入左值，推断为左值引用</span>
 <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值，推断为右值引用</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;</span>la <span class="token operator">=</span> a<span class="token punctuation">;</span>
 <span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">//传入左值引用，经折叠，推断为左值引用</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>ra <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token function">f</span><span class="token punctuation">(</span>ra<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值引用，经折叠，推断为右值引用</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   对于本例，已经很好地说明了问题，在不采用C++11新标准的情况下，使用make_pair是重新构造了新的变量来存储，所以能够正常运行。而在C++11采用万能引用的基础上，若手动给出参数类型，反而会因为引用参数类型不匹配造成编译错误。</p>
+<span class="token function">f</span><span class="token punctuation">(</span>ra<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值引用，经折叠，推断为右值引用</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>  对于本例，已经很好地说明了问题，在不采用C<ins>11新标准的情况下，使用make_pair是重新构造了新的变量来存储，所以能够正常运行。而在C</ins>11采用万能引用的基础上，若手动给出参数类型，反而会因为引用参数类型不匹配造成编译错误。</p>
 
                 
             </div>
