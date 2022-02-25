@@ -477,7 +477,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.2k
                 </div>
                 
 
@@ -507,22 +507,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>贴一波爬LeetCode每日一题的代码，也没啥技术含量，就嗯套+连连看，以后看看有没有啥更好的方法，以下都是使用#单行注释（Sagemath选手狂喜）</p>
-<h1 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h1>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+                <p>贴一波爬LeetCode每日一题的代码，也没啥技术含量，就嗯套+连连看，以后看看有没有啥更好的方法，以下都是使用#单行注释（Sagemath选手狂喜） # 准备工作 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
 <span class="token keyword">import</span> time
 <span class="token keyword">import</span> re
-<span class="token keyword">import</span> sys<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>time主要是做延迟操作，re引入正则匹配，sys就纯属要不要也差不多<br />
-这里主要是用selenium库，据说用pyppeteer更好，咱也没注意2333（主要是没看到教程555）<br />
-下面主要说几个注意事项：</p>
-<ol>
-<li>配置好python环境，python要写入环境变量（python本身安装包上是未勾选，注意勾选）</li>
-<li>安装selenium库，写入环境后在cmd下直接使用命令 <code>pip install selenium</code> 安装。</li>
-<li>然后要安装对应的drive，我是用的chrome，要下载对应的chromedrive。这里要注意与chrome本身的版本要一致，这一点网上有资料说明来参考。另外，如果要保持版本，可以停用chrome的更新服务。</li>
-</ol>
+<span class="token keyword">import</span> sys<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre> time主要是做延迟操作，re引入正则匹配，sys就纯属要不要也差不多 这里主要是用selenium库，据说用pyppeteer更好，咱也没注意2333（主要是没看到教程555） 下面主要说几个注意事项： 1. 配置好python环境，python要写入环境变量（python本身安装包上是未勾选，注意勾选） 1. 安装selenium库，写入环境后在cmd下直接使用命令 <code>pip install selenium</code> 安装。 1. 然后要安装对应的drive，我是用的chrome，要下载对应的chromedrive。这里要注意与chrome本身的版本要一致，这一点网上有资料说明来参考。另外，如果要保持版本，可以停用chrome的更新服务。</p>
 <hr />
-<h1 id="爬取网页部分"><a class="markdownIt-Anchor" href="#爬取网页部分"></a> 爬取网页部分</h1>
+<h1 id="爬取网页部分">爬取网页部分</h1>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">GetPageText</span><span class="token punctuation">(</span>url<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">str</span><span class="token punctuation">:</span>
     browser <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>Chrome<span class="token punctuation">(</span><span class="token punctuation">)</span>    
     browser<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
@@ -535,7 +525,7 @@
     <span class="token keyword">return</span> pageText<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里需要将chrome驱动放入python库的目录下才能正常启动。由于只是静态数据爬取，操作量也就那样，所以前面只需要简单的访问网页然后记录即可。在返回前先将需要使用的部分网页切片，避免内容过多在数据处理时正则匹配困难。</p>
 <hr />
-<h1 id="筛选数据部分"><a class="markdownIt-Anchor" href="#筛选数据部分"></a> 筛选数据部分</h1>
+<h1 id="筛选数据部分">筛选数据部分</h1>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">MatchItems</span><span class="token punctuation">(</span>tempText<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">list</span><span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>tempText<span class="token punctuation">)</span>
 
@@ -592,10 +582,9 @@
     infoList<span class="token punctuation">.</span>append<span class="token punctuation">(</span>solution<span class="token punctuation">)</span>
     infoList<span class="token punctuation">.</span>append<span class="token punctuation">(</span>fullHref<span class="token punctuation">)</span>
     <span class="token keyword">return</span> infoList<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>首先是看LeetCode对应界面的源码（F12看，还有直接右键检查），主要是看网页布局，看看如何使用正则匹配，因为标签较多，要找到合适的参考系（乐了，物理学渣瑟瑟发抖）。<br />
-下面基本上是连连看，大部分都是两次正则匹配出结果，大家可以先看看正则匹配如何使用，这其实是非常好用的搜索方式，即使是会使用beautiful soup也最好看看正则应该怎么做。</p>
+<p>首先是看LeetCode对应界面的源码（F12看，还有直接右键检查），主要是看网页布局，看看如何使用正则匹配，因为标签较多，要找到合适的参考系（乐了，物理学渣瑟瑟发抖）。 下面基本上是连连看，大部分都是两次正则匹配出结果，大家可以先看看正则匹配如何使用，这其实是非常好用的搜索方式，即使是会使用beautiful soup也最好看看正则应该怎么做。</p>
 <hr />
-<h1 id="写文件部分"><a class="markdownIt-Anchor" href="#写文件部分"></a> 写文件部分</h1>
+<h1 id="写文件部分">写文件部分</h1>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">WriteFile</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
     curTime <span class="token operator">=</span> time<span class="token punctuation">.</span>strftime<span class="token punctuation">(</span><span class="token string">"%Y-%m-%d"</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>localtime<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token keyword">try</span><span class="token punctuation">:</span>
@@ -625,12 +614,10 @@
         ofile<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
         ofile<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> <span class="token boolean">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里的try except主要是为了避免<s>文件指针为空</s>（人话：没读到那个文件）后依然进行操作引起程序出错。<br />
-做好各种检验工作后正常调用前面两个部分的函数。得到的结果按要求写入文件。这里主要是为了兼顾markdown语法和排版，所以加了制表符和|。最后注意关闭文件！这个操作蛮重要的，上次C++写文件没有close然后各种g，23333</p>
+<p>这里的try except主要是为了避免<del>文件指针为空</del>（人话：没读到那个文件）后依然进行操作引起程序出错。 做好各种检验工作后正常调用前面两个部分的函数。得到的结果按要求写入文件。这里主要是为了兼顾markdown语法和排版，所以加了制表符和|。最后注意关闭文件！这个操作蛮重要的，上次C++写文件没有close然后各种g，23333</p>
 <hr />
-<h1 id="旧版完整代码"><a class="markdownIt-Anchor" href="#旧版完整代码"></a> 旧版完整代码</h1>
-<p>贴一下完整代码，他这个代码风格好像对python兼容挺差的，很多高亮没做好，最好是复制到pycharm ~~（什么，为啥要用pycharm，我还有100种python ide）~~上看。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+<h1 id="旧版完整代码">旧版完整代码</h1>
+<p>贴一下完整代码，他这个代码风格好像对python兼容挺差的，很多高亮没做好，最好是复制到pycharm <del>（什么，为啥要用pycharm，我还有100种python ide）</del>上看。 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
 <span class="token keyword">import</span> time
 <span class="token keyword">import</span> re
 <span class="token keyword">import</span> sys
@@ -738,9 +725,9 @@
 
 
 isRunning <span class="token operator">=</span> WriteFile<span class="token punctuation">(</span><span class="token string">"C:\\leetcode\\leetcode.txt"</span><span class="token punctuation">)</span>     <span class="token comment">#传入文件地址</span>
-sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token keyword">not</span> isRunning<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token keyword">not</span> isRunning<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <hr />
-<h1 id="新版完整代码"><a class="markdownIt-Anchor" href="#新版完整代码"></a> 新版完整代码</h1>
+<h1 id="新版完整代码">新版完整代码</h1>
 <p>由于力扣官方改版，对网页布局调整，原先的代码寄了，贴一下现在的代码，整体结构类似，仅修改了匹配部分，注释参考旧版</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
 <span class="token keyword">import</span> time
@@ -1138,12 +1125,12 @@ sys<span class="token punctuation">.</span>exit<span class="token punctuation">(
                         <span class="chip bg-color">经验交流</span>
                     </a>
                     
-                    <a href="/commander.blog/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
                     <a href="/commander.blog/tags/python/">
                         <span class="chip bg-color">python</span>
+                    </a>
+                    
+                    <a href="/commander.blog/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
