@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="C++模板函数make_pair的问题, Home">
+    <meta name="keywords" content="从简单背包加密中再谈搜索与动态规划, Home">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C++模板函数make_pair的问题 | Home</title>
+    <title>从简单背包加密中再谈搜索与动态规划 | Home</title>
     <link rel="icon" type="image/png" href="/commander.blog/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/commander.blog/libs/awesome/css/all.css">
@@ -314,12 +314,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/commander.blog/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/commander.blog/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C++模板函数make_pair的问题</h1>
+                    <h1 class="description center-align post-title">从简单背包加密中再谈搜索与动态规划</h1>
                 </div>
             </div>
         </div>
@@ -439,6 +439,18 @@
                                 <span class="chip bg-color">经验交流</span>
                             </a>
                         
+                            <a href="/commander.blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                <span class="chip bg-color">数据结构</span>
+                            </a>
+                        
+                            <a href="/commander.blog/tags/C/">
+                                <span class="chip bg-color">C++</span>
+                            </a>
+                        
+                            <a href="/commander.blog/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -480,100 +492,117 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="c模板函数make_pair的问题">C++模板函数make_pair的问题</h1>
-<h2 id="问题引入">问题引入</h2>
-<p>  前几天在群里看到有人写堆优化dijkstra最短路的时候出现了问题，问题定位在make_pair的代码上，日常写这个的时候一般没有指定模板的类型，能够正常编译和运行，但这里指定之后为什么会存在编译问题呢。原问题抽象一下如下。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+                <h1 id="题目说明">题目说明</h1>
+<p>问题：已知一背包加密的公钥为{615436700291,415460700271,15508700231,846430100773,677471501215, 139578302079,179168604148,789306608798,563224517265,364498233536,229056467022,670323428329, 115934481316,44989786476,518624653302,149955258190,728568829281,796899516776,546782575075, 178164449829,356328899658,712657799316,569303048254,223205396187,446410792374,892821584748, 524144817108,132888933895,611875519857,877653387647,839906074973,35774353074}， 密文为6020587936087，试求明文二进制表示（形如：01001010000001110101001100001110）。 真正的背包加密要复杂得多，而且有固定的解法。这个是我们就题论题，首先我们这个问题是面向用例编程，和OJ不太一样，我们是用方法来解决这一个特殊问题。先做预处理，并初始化long long数组a</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">WEIGHT</span> <span class="token expression"><span class="token number">6020587936087</span></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> ll <span class="token operator">=</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-<span class="token comment">//    ios::sync_with_stdio(false);</span>
-<span class="token comment">//    cin.tie(0), cout.tie(0);</span>
-
-    <span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span> pr <span class="token operator">=</span> <span class="token generic-function"><span class="token function">make_pair</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   报错为 - error: no matching function for call to 'make_pair&lt;int, int&gt;(int&amp;, int)'</p>
+<span class="token keyword">int</span> n<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr />
-<h2 id="函数模板的特性">函数模板的特性</h2>
-<p>  函数重载、函数模板是C++的一个重要功能，利用泛型的方式由编译器编译时检测静态类型可以极大地便于编程。在使用模板函数时，可以不给出类型，交由编译器推导；也可以显式地指定类型，但必须与所带参数的类型一致，否则会报错。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> ll <span class="token operator">=</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
-
-<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
-T <span class="token function">myMinus</span><span class="token punctuation">(</span>T a<span class="token punctuation">,</span> T b<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> a <span class="token operator">-</span> b<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-<span class="token comment">//    ios::sync_with_stdio(false);</span>
-<span class="token comment">//    cin.tie(0), cout.tie(0);</span>
-
-    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token function">myMinus</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token generic-function"><span class="token function">myMinus</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token number">2.4</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   可以正常运行得到结果如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th>输出结果</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>2</td>
-</tr>
-<tr class="even">
-<td>1.9</td>
-</tr>
-</tbody>
-</table>
+<h1 id="思考">思考</h1>
+<p>首先看到“背包”两字就非常敏感，妥妥的动态规划，而且有且仅有一个解满足条件，天哪，这不正好。我想是不是这么个情况。这是一个存在性背包问题，我们可以通过两重循环在<span class="math inline">\(\large O \normalsize \left( n \times MAX\right)\)</span>的时间内完成，并且我们可以找一个pre数组来记录前一个取值，很轻松地找到那组可行解，好耶，这种做法相当研究生。那么我们思考一下写出动态规划的代码。</p>
 <hr />
-<h2 id="考察make_pair原码">考察make_pair原码</h2>
-<p>  在看了报错原因之后不禁疑惑，我给定的参数不应该是(int, int)为什么被推断成了(int&amp;, int)，这里就要引出make_pair函数的改良了，这个竟然是在C++11时代经过改良的一个函数。 - 注意：#if __cplusplus &gt;= 201103L 根据这个宏表明按照C++11标准的编译，而__cplusplus为 199711L则按照旧标准编译</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  <span class="token comment">// 181.  make_pair() unintended behavior</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">__cplusplus <span class="token operator">>=</span> <span class="token number">201103L</span></span></span>
-  <span class="token comment">// NB: DR 706.</span>
-  <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">_T1</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">_T2</span><span class="token operator">></span>
-    <span class="token keyword">constexpr</span> pair<span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T1<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type<span class="token punctuation">,</span>
-                   <span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T2<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type<span class="token operator">></span>
-    <span class="token function">make_pair</span><span class="token punctuation">(</span>_T1<span class="token operator">&amp;&amp;</span> __x<span class="token punctuation">,</span> _T2<span class="token operator">&amp;&amp;</span> __y<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-      <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T1<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type __ds_type1<span class="token punctuation">;</span>
-      <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">__decay_and_strip</span><span class="token operator">&lt;</span>_T2<span class="token operator">></span><span class="token double-colon punctuation">::</span>__type __ds_type2<span class="token punctuation">;</span>
-      <span class="token keyword">typedef</span> pair<span class="token operator">&lt;</span>__ds_type1<span class="token punctuation">,</span> __ds_type2<span class="token operator">></span> 	      __pair_type<span class="token punctuation">;</span>
-      <span class="token keyword">return</span> <span class="token function">__pair_type</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">forward</span><span class="token generic class-name"><span class="token operator">&lt;</span>_T1<span class="token operator">></span></span></span><span class="token punctuation">(</span>__x<span class="token punctuation">)</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">forward</span><span class="token generic class-name"><span class="token operator">&lt;</span>_T2<span class="token operator">></span></span></span><span class="token punctuation">(</span>__y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
-  <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">_T1</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">_T2</span><span class="token operator">></span>
-    <span class="token keyword">inline</span> pair<span class="token operator">&lt;</span>_T1<span class="token punctuation">,</span> _T2<span class="token operator">></span>
-    <span class="token function">make_pair</span><span class="token punctuation">(</span>_T1 __x<span class="token punctuation">,</span> _T2 __y<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token generic-function"><span class="token function">pair</span><span class="token generic class-name"><span class="token operator">&lt;</span>_T1<span class="token punctuation">,</span> _T2<span class="token operator">></span></span></span><span class="token punctuation">(</span>__x<span class="token punctuation">,</span> __y<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>  对比两个版本，最大的不同点在于给定参数模板时T被改为了T&amp;&amp;，这里就要谈一谈C++11中和右值引用相关的概念。</p>
+<h1 id="动态规划">动态规划</h1>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>ll<span class="token operator">></span> a <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">615436700291</span><span class="token punctuation">,</span><span class="token number">415460700271</span><span class="token punctuation">,</span><span class="token number">15508700231</span><span class="token punctuation">,</span><span class="token number">846430100773</span><span class="token punctuation">,</span><span class="token number">677471501215</span><span class="token punctuation">,</span><span class="token number">139578302079</span><span class="token punctuation">,</span><span class="token number">179168604148</span><span class="token punctuation">,</span><span class="token number">789306608798</span><span class="token punctuation">,</span><span class="token number">563224517265</span><span class="token punctuation">,</span><span class="token number">364498233536</span><span class="token punctuation">,</span><span class="token number">229056467022</span><span class="token punctuation">,</span><span class="token number">670323428329</span><span class="token punctuation">,</span><span class="token number">115934481316</span><span class="token punctuation">,</span><span class="token number">44989786476</span><span class="token punctuation">,</span><span class="token number">518624653302</span><span class="token punctuation">,</span><span class="token number">149955258190</span><span class="token punctuation">,</span><span class="token number">728568829281</span><span class="token punctuation">,</span><span class="token number">796899516776</span><span class="token punctuation">,</span><span class="token number">546782575075</span><span class="token punctuation">,</span><span class="token number">178164449829</span><span class="token punctuation">,</span><span class="token number">356328899658</span><span class="token punctuation">,</span><span class="token number">712657799316</span><span class="token punctuation">,</span><span class="token number">569303048254</span><span class="token punctuation">,</span><span class="token number">223205396187</span><span class="token punctuation">,</span><span class="token number">446410792374</span><span class="token punctuation">,</span><span class="token number">892821584748</span><span class="token punctuation">,</span><span class="token number">524144817108</span><span class="token punctuation">,</span><span class="token number">132888933895</span><span class="token punctuation">,</span><span class="token number">611875519857</span><span class="token punctuation">,</span><span class="token number">877653387647</span><span class="token punctuation">,</span><span class="token number">839906074973</span><span class="token punctuation">,</span><span class="token number">35774353074</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> size <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//确定物品数量</span>
+<span class="token keyword">bool</span><span class="token operator">*</span> dp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">bool</span><span class="token punctuation">[</span>WEIGHT <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">//dp数组下标意义为重量</span>
+unordered_map<span class="token operator">&lt;</span>ll<span class="token punctuation">,</span> pair<span class="token operator">&lt;</span>ll<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">>></span> premp<span class="token punctuation">;</span> <span class="token comment">//使用哈希表求沿途的元素，对应映射为：该重量对应前一重量和填入背包的元素</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token comment">//由于物品只能使用一次，外层遍历物品，内层遍历重量</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>ll i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> WEIGHT<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>i <span class="token operator">==</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>i <span class="token operator">>=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//使得i能被拼出的条件：直接有对应的物品，或(i - 某一物品重量)能被拼出</span>
+		<span class="token punctuation">&#123;</span>
+			dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+			premp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>first <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+			premp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>second <span class="token operator">=</span> j<span class="token punctuation">;</span> <span class="token comment">//确定倒序查找的线索</span>
+		<span class="token punctuation">&#125;</span>
+vector<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> <span class="token function">taken</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>ll i <span class="token operator">=</span> WEIGHT<span class="token punctuation">;</span> i <span class="token operator">==</span> premp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>second<span class="token punctuation">;</span> i <span class="token operator">=</span> premp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>first<span class="token punctuation">,</span> j <span class="token operator">=</span> premp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>second<span class="token punctuation">)</span> <span class="token comment">//倒序寻找加入背包的元素</span>
+	taken<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+taken<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token comment">//输出01序列</span>
+	cout <span class="token operator">&lt;&lt;</span> taken<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当我们迫不及待的按下F5的时候会发现报错了，啊这为啥会有这么大的数组，我们看到WEIGHT是一个让人震惊的数字。你可能会说，我们干脆从<span class="math inline">\(\mathop{min}\limits_{i \in \left[0 , 31\right]}\left\{ a_{i} \right\}\)</span>开始找，但是依然是一个很大的数字，诶，这个题动态规划失效了。当然还有其他的方法优化处理，楼主菜鸡表示不会。</p>
 <hr />
-<h2 id="关于c11新的引用标准">关于C++11新的引用标准</h2>
-<p>  在C++11中提出了右值引用的概念。我们一般习惯意义上的变量a,b,c还有对象object，指针p这些都是一个左值（严格意义上并不是定义依据，只是习惯理解）。右值分为两类，纯右值和将亡值。纯右值一般是字面量或表达式，而将亡值来源于临时对象即将销毁的情况。这两种情况都可以用右值引用的方式来获取。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token comment">//int &amp;&amp; a = num;  //右值引用不能初始化为左值</span>
-<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-a <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>   这里输出a的值为100。将亡值这里不再举例。右值引用的主要作用是为了减少程序开销的一种方式，一般都会利用其接管资源的性质。C++更有关于move,forward的实用用途，不妨查阅相关资料深入理解。这里更重要的是在右值引用基础上，C++做了一个万能引用(Universal Reference)。在指定template&lt;typename T&gt;模板的情况，可以使用T&amp;&amp;作为万能引用，具体推导见下面的例子。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
-<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>T<span class="token operator">&amp;&amp;</span> args<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<h1 id="搜索">搜索</h1>
+<p>对问题进行转化，实际上这是一个求子集合的问题，即找到某一集合，使得各元素和等于所给值sum，并指明该集合。而且我们注意这道题数组的大小为32，对于任何一个元素，拿与不拿是两种情况可分别搜索，比照嗯二叉搜索的时间复杂度<span class="math inline">\(\large O \normalsize \left(2^{n}\right)\)</span>，我们嗯穷举的量大概是<span class="math inline">\(2^{32}\)</span>，也就是<span class="math inline">\(10^{10}\)</span>，这个量还是非常猛，但是至少可以让程序run起来。 顺着这个思路我们先稍微写一下朴素的搜索算法，大概像这样。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">backtracking</span><span class="token punctuation">(</span><span class="token keyword">int</span> cur<span class="token punctuation">,</span> ll sum<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> istaken<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>ll<span class="token operator">></span> a<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">==</span> WEIGHT<span class="token punctuation">)</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+				cout <span class="token operator">&lt;&lt;</span> istaken<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+			cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre> <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入左值，推断为左值引用</span>
-<span class="token function">f</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值，推断为右值引用</span>
-<span class="token keyword">int</span> <span class="token operator">&amp;</span>la <span class="token operator">=</span> a<span class="token punctuation">;</span>
-<span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">//传入左值引用，经折叠，推断为左值引用</span>
-<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>ra <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token function">f</span><span class="token punctuation">(</span>ra<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">//传入右值引用，经折叠，推断为右值引用</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>   对于本例，已经很好地说明了问题，在不采用C++11新标准的情况下，使用make_pair是重新构造了新的变量来存储，所以能够正常运行。而在C++11采用万能引用的基础上，若手动给出参数类型，反而会因为引用参数类型不匹配造成编译错误。</p>
+	istaken<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token function">backtracking</span><span class="token punctuation">(</span>cur <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> sum <span class="token operator">+</span> a<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">,</span> istaken<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	istaken<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token function">backtracking</span><span class="token punctuation">(</span>cur <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> sum<span class="token punctuation">,</span> istaken<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们注意到搜索的终极大法是剪枝，有枝可以剪吗，答案是肯定的，一旦我们当前和已经超过了最大可容纳重量WEIGHT，那又没有负数，肯定要把背包撑爆，不会成为我们的最终选择，那我们干脆直接吧这种给淘汰掉。而且我们不难看出这个剪枝能使得效率提高很多。 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">WEIGHT</span> <span class="token expression"><span class="token number">6020587936087</span></span></span>
+	<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+	<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+
+	<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+
+	<span class="token comment">/*
+	函数名: backtracking
+	参数说明:
+	int cur : 表明当前递归层次，即当前考虑到数组中第cur + 1个元素
+	long long sum : 进入函数时的当前和
+	vector&lt;bool> istaken : 记录加入背包的元素
+	vector&lt;long long> a : 物品重量数组
+	int n : 全局变量，表明物品总量
+	返回值: 无(隐含全局变量操作)
+	*/</span>
+
+	<span class="token keyword">void</span> <span class="token function">backtracking</span><span class="token punctuation">(</span><span class="token keyword">int</span> cur<span class="token punctuation">,</span> ll sum<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> istaken<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>ll<span class="token operator">></span> a<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">//递归到最后一个物品时判断后回溯</span>
+		<span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">==</span> WEIGHT<span class="token punctuation">)</span> <span class="token comment">//若能拼出WEIGHT，输出信息，也可以利用全局变量返回</span>
+			<span class="token punctuation">&#123;</span>
+				<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+					cout <span class="token operator">&lt;&lt;</span> istaken<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+				cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+			<span class="token keyword">return</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">+</span> a<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> WEIGHT<span class="token punctuation">)</span> <span class="token comment">//剪枝操作，若加入当前元素后重量已经超过WEIGHT，后面已经不可能拼出WEIGHT，不再向下递归</span>
+		<span class="token punctuation">&#123;</span>
+			istaken<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">//先加入istaken</span>
+			<span class="token function">backtracking</span><span class="token punctuation">(</span>cur <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> sum <span class="token operator">+</span> a<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token punctuation">,</span> istaken<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//从cur + 1开始，以sum + a[cur]为当前和，向下搜索</span>
+			istaken<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">//状态还原</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">&lt;=</span> WEIGHT<span class="token punctuation">)</span> <span class="token comment">//剪枝操作，若当前重量超过WEIGHT，后面已经不可能拼出WEIGHT，不再向下递归</span>
+		<span class="token punctuation">&#123;</span>
+			istaken<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">//纯属对应操作，可有可无</span>
+			<span class="token function">backtracking</span><span class="token punctuation">(</span>cur <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> sum<span class="token punctuation">,</span> istaken<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//从cur + 1开始，以sum为当前和，向下搜索</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		vector<span class="token operator">&lt;</span>ll<span class="token operator">></span> a <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">615436700291</span><span class="token punctuation">,</span><span class="token number">415460700271</span><span class="token punctuation">,</span><span class="token number">15508700231</span><span class="token punctuation">,</span><span class="token number">846430100773</span><span class="token punctuation">,</span><span class="token number">677471501215</span><span class="token punctuation">,</span><span class="token number">139578302079</span><span class="token punctuation">,</span><span class="token number">179168604148</span><span class="token punctuation">,</span><span class="token number">789306608798</span><span class="token punctuation">,</span><span class="token number">563224517265</span><span class="token punctuation">,</span><span class="token number">364498233536</span><span class="token punctuation">,</span><span class="token number">229056467022</span><span class="token punctuation">,</span><span class="token number">670323428329</span><span class="token punctuation">,</span><span class="token number">115934481316</span><span class="token punctuation">,</span><span class="token number">44989786476</span><span class="token punctuation">,</span><span class="token number">518624653302</span><span class="token punctuation">,</span><span class="token number">149955258190</span><span class="token punctuation">,</span><span class="token number">728568829281</span><span class="token punctuation">,</span><span class="token number">796899516776</span><span class="token punctuation">,</span><span class="token number">546782575075</span><span class="token punctuation">,</span><span class="token number">178164449829</span><span class="token punctuation">,</span><span class="token number">356328899658</span><span class="token punctuation">,</span><span class="token number">712657799316</span><span class="token punctuation">,</span><span class="token number">569303048254</span><span class="token punctuation">,</span><span class="token number">223205396187</span><span class="token punctuation">,</span><span class="token number">446410792374</span><span class="token punctuation">,</span><span class="token number">892821584748</span><span class="token punctuation">,</span><span class="token number">524144817108</span><span class="token punctuation">,</span><span class="token number">132888933895</span><span class="token punctuation">,</span><span class="token number">611875519857</span><span class="token punctuation">,</span><span class="token number">877653387647</span><span class="token punctuation">,</span><span class="token number">839906074973</span><span class="token punctuation">,</span><span class="token number">35774353074</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+		n <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		vector<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> <span class="token function">istaken</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">backtracking</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> istaken<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//注意开始搜索的条件</span>
+
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> 所以<del>面向用例编程yyds</del>，emmm我们要看到数据的特点来选择恰当的方法</p>
+<p>[toc]</p>
 
                 
             </div>
@@ -600,7 +629,7 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://862316674.github.io/commander.blog/commander.blog/2022/02/24/C-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0make-pair%E7%9A%84%E9%97%AE%E9%A2%98/">https://862316674.github.io/commander.blog/commander.blog/2022/02/24/C-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0make-pair%E7%9A%84%E9%97%AE%E9%A2%98/</a>
+                    <a href="https://862316674.github.io/commander.blog/commander.blog/posts/e272.html">https://862316674.github.io/commander.blog/commander.blog/posts/e272.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,6 +669,18 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                             
                                 <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
                                     <span class="chip bg-color">经验交流</span>
+                                </a>
+                            
+                                <a href="/commander.blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                    <span class="chip bg-color">数据结构</span>
+                                </a>
+                            
+                                <a href="/commander.blog/tags/C/">
+                                    <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/commander.blog/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -809,18 +850,17 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/commander.blog/2022/02/24/C-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0make-pair%E7%9A%84%E9%97%AE%E9%A2%98/">
+                <a href="/commander.blog/posts/75a9.html">
                     <div class="card-image">
                         
                         
-                        <img src="/commander.blog/medias/featureimages/1.jpg" class="responsive-img" alt="C++模板函数make_pair的问题">
+                        <img src="/commander.blog/medias/featureimages/3.jpg" class="responsive-img" alt="做一些资料整合和分享">
                         
-                        <span class="card-title">C++模板函数make_pair的问题</span>
+                        <span class="card-title">做一些资料整合和分享</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -830,9 +870,9 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -841,12 +881,19 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                        <span class="chip bg-color">经验交流</span>
+                    <a href="/commander.blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                        <span class="chip bg-color">计算机</span>
+                    </a>
+                    
+                    <a href="/commander.blog/tags/%E6%95%B0%E5%AD%A6/">
+                        <span class="chip bg-color">数学</span>
+                    </a>
+                    
+                    <a href="/commander.blog/tags/%E8%B5%84%E6%96%99%E5%88%86%E4%BA%AB/">
+                        <span class="chip bg-color">资料分享</span>
                     </a>
                     
                 </div>
@@ -860,13 +907,13 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/commander.blog/2022/02/24/Java%E6%95%B0%E7%BB%84%E4%B8%8Elist%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">
+                <a href="/commander.blog/posts/3eeb.html">
                     <div class="card-image">
                         
                         
-                        <img src="/commander.blog/medias/featureimages/0.jpg" class="responsive-img" alt="Java数组与list相互转换的一些坑">
+                        <img src="/commander.blog/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">Java数组与list相互转换的一些坑</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -877,7 +924,7 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-23
                             </span>
                         <span class="publish-author">
                             
@@ -886,14 +933,6 @@ cout <span class="token operator">&lt;&lt;</span> a <span class="token operator"
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
-                        <span class="chip bg-color">经验交流</span>
-                    </a>
-                    
                 </div>
                 
             </div>
