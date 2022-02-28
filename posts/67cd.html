@@ -433,9 +433,21 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
+                                <span class="chip bg-color">经验交流</span>
+                            </a>
+                        
+                            <a href="/commander.blog/tags/%E5%BA%95%E5%B1%82/">
+                                <span class="chip bg-color">底层</span>
+                            </a>
+                        
+                            <a href="/commander.blog/tags/golang/">
+                                <span class="chip bg-color">golang</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -491,10 +503,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="golang中的分行"><a class="markdownIt-Anchor" href="#golang中的分行"></a> Golang中的分行</h1>
-<h2 id="golang的代码风格"><a class="markdownIt-Anchor" href="#golang的代码风格"></a> Golang的代码风格</h2>
-<p>  在go语言中有一个非常神奇的语法检验规则，函数与大括号必须在同一行，if后紧跟的else必须在}的当行，否则不能通过编译。如下：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+                <h1 id="golang中的分行">Golang中的分行</h1>
+<h2 id="golang的代码风格">Golang的代码风格</h2>
+<p>  在go语言中有一个非常神奇的语法检验规则，函数与大括号必须在同一行，if后紧跟的else必须在}的当行，否则不能通过编译。如下： <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
 <span class="token punctuation">&#123;</span>
 	a <span class="token operator">:=</span> <span class="token number">1</span>
 	<span class="token keyword">if</span> a <span class="token operator">!=</span> <span class="token number">1</span> <span class="token punctuation">&#123;</span>
@@ -503,7 +514,7 @@
 	<span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
 		
 	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <p>  报如下错误：</p>
 <ul>
 <li>缺少函数正文</li>
@@ -521,15 +532,14 @@
 <p>  报如下错误：</p>
 <ul>
 <li>在复合文字中的换行符前面需要尾随逗号</li>
-<li>应为 ‘,’ 或 new line</li>
+<li>应为 ',' 或 new line</li>
 </ul>
 <hr />
-<h2 id="探究golang的编译细节"><a class="markdownIt-Anchor" href="#探究golang的编译细节"></a> 探究Golang的编译细节</h2>
+<h2 id="探究golang的编译细节">探究Golang的编译细节</h2>
 <blockquote>
 <p>In effect, newlines following certain tokens are converted into semicolons, so where newlines are placed matters to proper parsing of Go code.</p>
 </blockquote>
-<p>  也就是说go编译器会在特定的符号后加入分号;来分行，而C/C++的分行是交给程序员的，也就解释了为什么逗号,会在两种编译情况下产生完全不同的表达。<br />
-  在go编译器中，上述代码会这样解释：</p>
+<p>  也就是说go编译器会在特定的符号后加入分号;来分行，而C/C++的分行是交给程序员的，也就解释了为什么逗号,会在两种编译情况下产生完全不同的表达。   在go编译器中，上述代码会这样解释：</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 <span class="token punctuation">&#123;</span>
 	a <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span>
@@ -549,12 +559,12 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token function">len</span><span class="token punctuation">(</span>hmp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>  由于分号问题，不能识别函数，if-else的匹配，函数的传参，所以编译会报错。这里我们再列出go会自动在其结尾添加分号的这些特殊符号：</p>
-<ol>
+<ol type="1">
 <li>标识符</li>
 <li>字面量 （数字、字符串、布尔值等）</li>
 <li>关键字break, continue, fallthrough, return</li>
-<li>特殊运算++ –</li>
-<li>特殊分隔符 )  ]  }</li>
+<li>特殊运算++ --</li>
+<li>特殊分隔符 ) ] }</li>
 </ol>
 <hr />
 
@@ -620,7 +630,19 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
+                                    <span class="chip bg-color">经验交流</span>
+                                </a>
+                            
+                                <a href="/commander.blog/tags/%E5%BA%95%E5%B1%82/">
+                                    <span class="chip bg-color">底层</span>
+                                </a>
+                            
+                                <a href="/commander.blog/tags/golang/">
+                                    <span class="chip bg-color">golang</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -821,6 +843,22 @@
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/commander.blog/tags/%E7%BB%8F%E9%AA%8C%E4%BA%A4%E6%B5%81/">
+                        <span class="chip bg-color">经验交流</span>
+                    </a>
+                    
+                    <a href="/commander.blog/tags/%E5%BA%95%E5%B1%82/">
+                        <span class="chip bg-color">底层</span>
+                    </a>
+                    
+                    <a href="/commander.blog/tags/golang/">
+                        <span class="chip bg-color">golang</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
